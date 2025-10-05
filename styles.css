@@ -1,0 +1,29 @@
+*{box-sizing:border-box}html,body{margin:0;padding:0;font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;background:#0e1114;color:#e6e9ef}
+.bar{display:flex;align-items:center;gap:.5rem;padding:.75rem 1rem;background:#15191f;border-bottom:1px solid #222834;position:sticky;top:0;z-index:100}
+.bar h1{font-size:1rem;margin:0}
+.spacer{flex:1}
+.btn{padding:.5rem .8rem;border:1px solid #2b3240;background:#1b2029;color:#f7f9fc;border-radius:.55rem;cursor:pointer}
+.btn:hover{filter:brightness(1.08)}
+.hidden{display:none}
+.tabs{display:flex;gap:.25rem;padding:.25rem;background:#0f1217;border-bottom:1px solid #222834;position:sticky;top:48px;z-index:90;overflow:auto}
+.tab{padding:.6rem .9rem;background:#141821;color:#b9c3d6;border:1px solid #222834;border-bottom:none;border-top-left-radius:.5rem;border-top-right-radius:.5rem;cursor:pointer;white-space:nowrap}
+.tab.active{background:#1a2030;color:#fff}
+.tabpanel{display:none;padding:1rem}
+.tabpanel.active{display:block}
+.grid{display:grid;gap:1rem}
+.grid.two{grid-template-columns:repeat(auto-fit,minmax(280px,1fr))}
+.grid.three{grid-template-columns:repeat(auto-fit,minmax(260px,1fr))}
+.grid.four{grid-template-columns:repeat(auto-fit,minmax(240px,1fr))}
+.grid.five{grid-template-columns:repeat(auto-fit,minmax(220px,1fr))}
+.grid.six{grid-template-columns:repeat(auto-fit,minmax(160px,1fr));align-items:end}
+.card{background:#151a22;border:1px solid #232a38;border-radius:.9rem;padding:1rem;box-shadow:0 8px 24px rgba(0,0,0,.25)}
+.card h2,.card h3{margin:.2rem 0 .6rem}
+label{display:flex;flex-direction:column;gap:.3rem;margin:.35rem 0}
+input,textarea{padding:.55rem .6rem;border:1px solid #2a3040;background:#0f131a;color:#e6e9ef;border-radius:.5rem}
+textarea{resize:vertical}
+.row{display:flex;gap:.75rem;flex-wrap:wrap}
+.stat{background:#11161f;border:1px dashed #2a3446;border-radius:.6rem;padding:.6rem}
+.mod{opacity:.8;font-size:.85rem;margin-top:.3rem}
+.hint{opacity:.65;font-size:.85rem;margin-top:.35rem}
+.skill-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:.3rem}
+.foot{padding:1rem;text-align:center;color:#9aa7b7}

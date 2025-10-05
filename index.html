@@ -1,0 +1,288 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Token Legends — Full Character Sheet</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <header class="bar">
+    <h1>Token Legends — Full Character Sheet</h1>
+    <div class="spacer"></div>
+    <button id="saveBtn" class="btn">Save</button>
+    <button id="loadBtn" class="btn">Load</button>
+    <button id="exportBtn" class="btn">Export JSON</button>
+    <input id="importFile" type="file" accept="application/json" class="hidden" />
+    <button id="importBtn" class="btn">Import JSON</button>
+  </header>
+
+  <nav class="tabs" role="tablist">
+    <button class="tab active" data-tab="tab-overview">Overview</button>
+    <button class="tab" data-tab="tab-attributes">Attributes</button>
+    <button class="tab" data-tab="tab-combat">Combat Skills</button>
+    <button class="tab" data-tab="tab-magic">Magic Skills</button>
+    <button class="tab" data-tab="tab-civil">Civil Skills</button>
+    <button class="tab" data-tab="tab-abilities">Abilities & Spells</button>
+    <button class="tab" data-tab="tab-equipment">Equipment</button>
+    <button class="tab" data-tab="tab-perks">Perks</button>
+    <button class="tab" data-tab="tab-feats">Feats</button>
+    <button class="tab" data-tab="tab-resources">Tokens / PA / MS</button>
+    <button class="tab" data-tab="tab-notes">Notes / Export</button>
+  </nav>
+
+  <main>
+    <!-- OVERVIEW -->
+    <section id="tab-overview" class="tabpanel active">
+      <div class="grid three">
+        <div class="card">
+          <h2>Identity</h2>
+          <label>Name <input id="name" type="text"></label>
+          <label>Race <input id="race" type="text"></label>
+          <label>Class (Base) <input id="clazz" type="text" placeholder="e.g., Fighter / Mage"></label>
+          <label>Level <input id="level" type="number" min="1" max="20" value="1"></label>
+          <label>Initiative <input id="initiative" type="number" readonly></label>
+          <p class="hint">Initiative = CHM modifier (per TL rules).</p>
+        </div>
+        <div class="card">
+          <h2>Accuracy & Movement</h2>
+          <div class="row">
+            <label>Base Accuracy <input id="baseAccuracy" type="number" readonly></label>
+            <label>Move Speed (ft) <input id="move" type="number" readonly></label>
+          </div>
+          <p class="hint">Base Accuracy comes from the selected Combat Skill Line. Move Speed gains +5 ft per 5 DEX.</p>
+        </div>
+        <div class="card">
+          <h2>Crit & Slots</h2>
+          <div class="row">
+            <label>Crit Multiplier (%) <input id="critMult" type="number" readonly></label>
+            <label>Ability Slots <input id="abilitySlots" type="number" readonly></label>
+          </div>
+          <p class="hint">SMA: +5% crit dmg per 1 SMA. MND: +1 slot per 2 MND.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ATTRIBUTES -->
+    <section id="tab-attributes" class="tabpanel">
+      <div class="card">
+        <h2>Core Attributes</h2>
+        <div class="grid six">
+          <div class="stat"><label>STR <input type="number" id="STR" min="1" max="30" value="10"></label><div class="mod">Mod <span id="STR_mod">0</span></div></div>
+          <div class="stat"><label>DEX <input type="number" id="DEX" min="1" max="30" value="10"></label><div class="mod">Mod <span id="DEX_mod">0</span></div></div>
+          <div class="stat"><label>CON <input type="number" id="CON" min="1" max="30" value="10"></label><div class="mod">Mod <span id="CON_mod">0</span></div></div>
+          <div class="stat"><label>MND <input type="number" id="MND" min="1" max="30" value="10"></label><div class="mod">Mod <span id="MND_mod">0</span></div></div>
+          <div class="stat"><label>SMA <input type="number" id="SMA" min="1" max="30" value="10"></label><div class="mod">Mod <span id="SMA_mod">0</span></div></div>
+          <div class="stat"><label>CHA <input type="number" id="CHA" min="1" max="30" value="10"></label><div class="mod">Mod <span id="CHA_mod">0</span></div></div>
+        </div>
+        <p class="hint">Use your TL attribute caps; values above cap can be highlighted, but still allowed.</p>
+      </div>
+    </section>
+
+    <!-- COMBAT SKILLS -->
+    <section id="tab-combat" class="tabpanel">
+      <div class="grid four">
+        <div class="card skill-card" data-skill="Martial">
+          <div class="skill-head">
+            <h3>Martial</h3>
+            <label class="single-pick"><input type="checkbox" class="accPick" data-skill="Martial"> Use for Accuracy</label>
+          </div>
+          <div class="row">
+            <label>Points (0–10) <input type="number" class="points" data-skill="Martial" min="0" max="10" value="0"></label>
+            <label>ACC Mod <input type="number" class="accMod" data-skill="Martial" value="0" readonly></label>
+          </div>
+        </div>
+
+        <div class="card skill-card" data-skill="Ranged">
+          <div class="skill-head">
+            <h3>Ranged</h3>
+            <label class="single-pick"><input type="checkbox" class="accPick" data-skill="Ranged"> Use for Accuracy</label>
+          </div>
+          <div class="row">
+            <label>Points (0–10) <input type="number" class="points" data-skill="Ranged" min="0" max="10" value="0"></label>
+            <label>ACC Mod <input type="number" class="accMod" data-skill="Ranged" value="0" readonly></label>
+          </div>
+        </div>
+
+        <div class="card skill-card" data-skill="Rogue">
+          <div class="skill-head">
+            <h3>Rogue</h3>
+            <label class="single-pick"><input type="checkbox" class="accPick" data-skill="Rogue"> Use for Accuracy</label>
+          </div>
+          <div class="row">
+            <label>Points (0–10) <input type="number" class="points" data-skill="Rogue" min="0" max="10" value="0"></label>
+            <label>ACC Mod <input type="number" class="accMod" data-skill="Rogue" value="0" readonly></label>
+          </div>
+        </div>
+
+        <div class="card skill-card" data-skill="Tough">
+          <div class="skill-head">
+            <h3>Tough</h3>
+            <label class="single-pick"><input type="checkbox" class="accPick" data-skill="Tough"> Use for Accuracy</label>
+          </div>
+          <div class="row">
+            <label>Points (0–10) <input type="number" class="points" data-skill="Tough" min="0" max="10" value="0"></label>
+            <label>ACC Mod <input type="number" class="accMod" data-skill="Tough" value="0" readonly></label>
+          </div>
+        </div>
+      </div>
+      <p class="hint">ACC Mod = ⌊Points ÷ 2⌋. Only one checkbox can be selected; Base Accuracy mirrors that selection.</p>
+    </section>
+
+    <!-- MAGIC SKILLS -->
+    <section id="tab-magic" class="tabpanel">
+      <div class="grid five">
+        <div class="card magic" data-magic="Red"><h3>Red</h3><label>Points (0–10) <input type="number" class="magicPts" data-magic="Red" min="0" max="10" value="0"></label><label>Circle <input type="number" class="circle" data-magic="Red" value="0" readonly></label></div>
+        <div class="card magic" data-magic="Blue"><h3>Blue</h3><label>Points (0–10) <input type="number" class="magicPts" data-magic="Blue" min="0" max="10" value="0"></label><label>Circle <input type="number" class="circle" data-magic="Blue" value="0" readonly></label></div>
+        <div class="card magic" data-magic="Yellow"><h3>Yellow</h3><label>Points (0–10) <input type="number" class="magicPts" data-magic="Yellow" min="0" max="10" value="0"></label><label>Circle <input type="number" class="circle" data-magic="Yellow" value="0" readonly></label></div>
+        <div class="card magic" data-magic="Unnatural"><h3>Unnatural</h3><label>Points (0–10) <input type="number" class="magicPts" data-magic="Unnatural" min="0" max="10" value="0"></label><label>Circle <input type="number" class="circle" data-magic="Unnatural" value="0" readonly></label></div>
+        <div class="card magic" data-magic="Morph"><h3>Morph</h3><label>Points (0–10) <input type="number" class="magicPts" data-magic="Morph" min="0" max="10" value="0"></label><label>Circle <input type="number" class="circle" data-magic="Morph" value="0" readonly></label></div>
+        <div class="card magic" data-magic="Colourless"><h3>Colourless</h3><label>Points (0–10) <input type="number" class="magicPts" data-magic="Colourless" min="0" max="10" value="0"></label><label>Circle <input type="number" class="circle" data-magic="Colourless" value="0" readonly></label></div>
+        <div class="card magic" data-magic="Green"><h3>Green</h3><label>Points (0–10) <input type="number" class="magicPts" data-magic="Green" min="0" max="10" value="0"></label><label>Circle <input type="number" class="circle" data-magic="Green" value="0" readonly></label></div>
+        <div class="card magic" data-magic="Black"><h3>Black</h3><label>Points (0–10) <input type="number" class="magicPts" data-magic="Black" min="0" max="10" value="0"></label><label>Circle <input type="number" class="circle" data-magic="Black" value="0" readonly></label></div>
+        <div class="card magic" data-magic="White"><h3>White</h3><label>Points (0–10) <input type="number" class="magicPts" data-magic="White" min="0" max="10" value="0"></label><label>Circle <input type="number" class="circle" data-magic="White" value="0" readonly></label></div>
+      </div>
+      <p class="hint">Circle progression: start at Circle 1 with 1 point, +1 Circle per 2 points, up to 10 (per TL rules). Focus caps are not enforced here; track by table agreements or extend logic later.</p>
+    </section>
+
+    <!-- CIVIL SKILLS -->
+    <section id="tab-civil" class="tabpanel">
+      <div class="grid five">
+        <div class="card civil"><h3>Merchantry</h3><label>Points (0–10) <input class="civilPts" data-civil="Merchantry" type="number" min="0" max="10" value="0"></label></div>
+        <div class="card civil"><h3>Scholar</h3><label>Points (0–10) <input class="civilPts" data-civil="Scholar" type="number" min="0" max="10" value="0"></label></div>
+        <div class="card civil"><h3>Tradesman</h3><label>Points (0–10) <input class="civilPts" data-civil="Tradesman" type="number" min="0" max="10" value="0"></label></div>
+        <div class="card civil"><h3>Thievery</h3><label>Points (0–10) <input class="civilPts" data-civil="Thievery" type="number" min="0" max="10" value="0"></label></div>
+        <div class="card civil"><h3>Crafts</h3><label>Points (0–10) <input class="civilPts" data-civil="Crafts" type="number" min="0" max="10" value="0"></label></div>
+        <div class="card civil"><h3>Artisan</h3><label>Points (0–10) <input class="civilPts" data-civil="Artisan" type="number" min="0" max="10" value="0"></label></div>
+        <div class="card civil"><h3>Alchemy</h3><label>Points (0–10) <input class="civilPts" data-civil="Alchemy" type="number" min="0" max="10" value="0"></label></div>
+        <div class="card civil"><h3>Cook</h3><label>Points (0–10) <input class="civilPts" data-civil="Cook" type="number" min="0" max="10" value="0"></label></div>
+        <div class="card civil"><h3>Deduction</h3><label>Points (0–10) <input class="civilPts" data-civil="Deduction" type="number" min="0" max="10" value="0"></label></div>
+        <div class="card civil"><h3>Performer</h3><label>Points (0–10) <input class="civilPts" data-civil="Performer" type="number" min="0" max="10" value="0"></label></div>
+      </div>
+    </section>
+
+    <!-- ABILITIES & SPELLS -->
+    <section id="tab-abilities" class="tabpanel">
+      <div class="card">
+        <h2>Prepared Abilities & Spells</h2>
+        <div id="abilityList"></div>
+        <div class="grid four">
+          <label>Name <input id="abName" type="text" placeholder="e.g., Cleave, Chain Lightning"></label>
+          <label>Line <input id="abLine" type="text" placeholder="Martial / Red / Blue / ..."></label>
+          <label>Circle Req <input id="abCircle" type="number" min="0" max="10" value="0"></label>
+          <label>Casting Time <input id="abCast" type="text" placeholder="Instant / Start / End / Reaction"></label>
+        </div>
+        <div class="grid two">
+          <label>Token Cost <input id="abTokens" type="number" min="0" value="1"></label>
+          <label>Cooldown <input id="abCooldown" type="number" min="0" value="0"></label>
+        </div>
+        <label>Description <textarea id="abDesc" rows="3" placeholder="Effect text..."></textarea></label>
+        <div class="row">
+          <button id="addAbility" class="btn">Add / Update</button>
+          <button id="clearAbilities" class="btn">Clear All</button>
+        </div>
+        <p class="hint">Spells must include Circle Requirement + Casting Time. Upcasting = more Tokens for heightened effect.</p>
+      </div>
+    </section>
+
+    <!-- EQUIPMENT -->
+    <section id="tab-equipment" class="tabpanel">
+      <div class="grid two">
+        <div class="card">
+          <h2>Weapons / Armor / Gear</h2>
+          <div id="equipList"></div>
+          <div class="row">
+            <input id="equipName" type="text" placeholder="Item name">
+            <button id="addEquip" class="btn">Add</button>
+          </div>
+          <p class="hint">No duplicates allowed in this list.</p>
+        </div>
+        <div class="card">
+          <h2>Carry Slots</h2>
+          <label>Slots Used <input id="carryUsed" type="number" min="0" value="0"></label>
+          <label>Slots Max <input id="carryMax" type="number" min="0" value="10"></label>
+          <p class="hint">Terminology uses “carry slots” (not carry weight).</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- PERKS -->
+    <section id="tab-perks" class="tabpanel">
+      <div class="card">
+        <h2>Perks</h2>
+        <div id="perkList"></div>
+        <div class="grid three">
+          <label>Name <input id="perkName" type="text" placeholder="e.g., Unarmed Discipline T1"></label>
+          <label>Tier <input id="perkTier" type="number" min="1" max="3" value="1"></label>
+          <label>Category <input id="perkCat" type="text" placeholder="Combat / Command / Synergy / Magic / Civil / Item / Legendary"></label>
+        </div>
+        <label>Description <textarea id="perkDesc" rows="3" placeholder="Short description..."></textarea></label>
+        <div class="row">
+          <button id="addPerk" class="btn">Add / Update</button>
+          <button id="clearPerks" class="btn">Clear All</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- FEATS -->
+    <section id="tab-feats" class="tabpanel">
+      <div class="card">
+        <h2>Feats</h2>
+        <div id="featList"></div>
+        <div class="grid two">
+          <label>Name <input id="featName" type="text" placeholder="Skill Line Feat"></label>
+          <label>Level <input id="featLevel" type="number" min="1" max="20" value="1"></label>
+        </div>
+        <label>Description <textarea id="featDesc" rows="3"></textarea></label>
+        <div class="row">
+          <button id="addFeat" class="btn">Add / Update</button>
+          <button id="clearFeats" class="btn">Clear All</button>
+        </div>
+        <p class="hint">Feat cadence: 1, 4, 7, 10, 13, 16, 19 (per TL notes).</p>
+      </div>
+    </section>
+
+    <!-- RESOURCES -->
+    <section id="tab-resources" class="tabpanel">
+      <div class="grid three">
+        <div class="card">
+          <h2>Tokens</h2>
+          <label>Tokens <input id="tokens" type="number" min="0" value="3"></label>
+          <label>Overflow Tokens <input id="overflow" type="number" min="0" value="0"></label>
+        </div>
+        <div class="card">
+          <h2>Physical Armour (PA)</h2>
+          <label>PA (Flat DR) <input id="PA" type="number" min="0" value="0"></label>
+          <label>Mitigation Uses (by CON mod) <input id="PAMit" type="number" min="0" value="0"></label>
+          <p class="hint">PA reduces damage after a hit. Fully restores via smithy or Tradesman repair.</p>
+        </div>
+        <div class="card">
+          <h2>Magic Shield (MS)</h2>
+          <label>MS (points) <input id="MS" type="number" min="0" value="0"></label>
+          <label>Strikes Absorbable (by MND mod) <input id="MShits" type="number" min="0" value="0"></label>
+          <p class="hint">MS resets on rest. Mid-combat refresh: spend 2 Tokens + 1 Circle for half MS; refresh circle enters cooldown equal to enemy spell Circle blocked.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- NOTES / EXPORT -->
+    <section id="tab-notes" class="tabpanel">
+      <div class="card">
+        <h2>Notes</h2>
+        <textarea id="notes" rows="10" placeholder="Session notes, reminders, etc."></textarea>
+      </div>
+    </section>
+  </main>
+
+  <footer class="foot">
+    <small>Build: 2025-10-06 — Token Legends full sheet</small>
+  </footer>
+
+  <script src="js/state.js"></script>
+  <script src="js/tabs.js"></script>
+  <script src="js/calcs.js"></script>
+  <script src="js/sections.js"></script>
+  <script src="js/persist.js"></script>
+  <script src="js/export.js"></script>
+</body>
+</html>
